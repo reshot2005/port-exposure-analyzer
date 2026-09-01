@@ -1,0 +1,3 @@
+This is a sample file for the port-exposure-analyzer tool.
+It demonstrates honest OBSERVED findings from real input data.
+No fabricated detections — the SHA-256 hash is computed from this content.

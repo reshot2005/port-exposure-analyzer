@@ -1,0 +1,82 @@
+version: "1.0"
+name: "enterprise-exposure-baseline"
+description: "Default enterprise port exposure policy — customize for your environment"
+
+tier_weights:
+  critical: 1.0
+  high: 0.75
+  medium: 0.5
+  low: 0.25
+  info: 0.1
+
+rules:
+  - id: telnet-exposed
+    tier: critical
+    ports: [23]
+    protocols: [tcp]
+    categories: [remote-access, cleartext]
+    cwe: ["CWE-319"]
+    rationale: "Telnet transmits credentials in cleartext"
+    remediation: "Disable telnet; use SSH instead"
+
+  - id: rdp-exposed
+    tier: high
+    ports: [3389]
+    protocols: [tcp]
+    categories: [remote-access, admin]
+    cwe: ["CWE-284"]
+    rationale: "RDP exposed increases brute-force and lateral movement risk"
+    remediation: "Restrict RDP via VPN or bastion; enable NLA"
+
+  - id: smb-exposed
+    tier: high
+    ports: [445, 139]
+    protocols: [tcp]
+    categories: [file-sharing, lateral-movement]
+    cwe: ["CWE-200"]
+    rationale: "SMB exposure enables enumeration and relay attacks"
+    remediation: "Block SMB at perimeter; require SMB signing"
+
+  - id: database-exposed
+    tier: critical
+    ports: [3306, 5432, 1433, 27017, 6379]
+    protocols: [tcp]
+    categories: [database]
+    cwe: ["CWE-284"]
+    rationale: "Database ports should not be internet-accessible"
+    remediation: "Move database behind application tier; restrict by firewall"
+
+  - id: ssh-exposed
+    tier: medium
+    ports: [22]
+    protocols: [tcp]
+    services: [ssh]
+    categories: [remote-access]
+    rationale: "SSH is expected on servers but increases attack surface when broadly exposed"
+    remediation: "Restrict SSH source IPs; use key-based auth; disable root login"
+
+  - id: http-admin
+    tier: medium
+    ports: [80, 8080, 8000, 8888]
+    protocols: [tcp]
+    services: [http]
+    categories: [web, admin]
+    rationale: "HTTP services may expose admin interfaces without TLS"
+    remediation: "Enforce HTTPS; restrict admin paths"
+
+  - id: legacy-ftp
+    tier: high
+    ports: [21]
+    protocols: [tcp]
+    services: [ftp]
+    categories: [file-transfer, cleartext]
+    rationale: "FTP transmits credentials in cleartext"
+    remediation: "Replace with SFTP or FTPS"
+
+  - id: ephemeral-range
+    tier: low
+    port_ranges: [[49152, 65535]]
+    protocols: [tcp, udp]
+    categories: [ephemeral]
+    rationale: "High ephemeral ports may indicate dynamic services or P2P"
+    remediation: "Review necessity of high-port services"

@@ -1,0 +1,58 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "port-exposure-analyzer"
+version = "0.1.0"
+description = "Policy-driven port exposure risk scoring from nmap/masscan scan data"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.11"
+authors = [{ name = "Security Research Collection" }]
+keywords = ["security", "network", "exposure", "policy", "risk"]
+dependencies = [
+    "secintel-core>=0.1.0",
+    "typer>=0.12",
+    "rich>=13.0",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "secintel-core[dev]>=0.1.0",
+    "pytest>=8.0",
+    "pytest-cov>=4.1",
+    "ruff>=0.4",
+    "mypy>=1.8",
+    "types-PyYAML>=6.0",
+]
+
+[project.scripts]
+port-exposure-analyzer = "port_exposure_analyzer.cli:app"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/port_exposure_analyzer"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP", "B", "S", "C4"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101"]
+"src/port_exposure_analyzer/cli.py" = ["B008", "E501"]
+"src/port_exposure_analyzer/core.py" = ["E501"]
+"src/port_exposure_analyzer/parsers/nmap_xml.py" = ["S314"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+packages = ["port_exposure_analyzer"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v --tb=short"

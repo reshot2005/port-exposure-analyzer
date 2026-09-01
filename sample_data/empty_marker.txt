@@ -1,0 +1,2 @@
+# Empty file for negative testing.
+# The tool should produce zero findings when analyzing an empty directory scenario.

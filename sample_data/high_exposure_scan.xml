@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nmaprun>
+<nmaprun scanner="nmap" args="nmap -sV" start="1704067200" version="7.94">
+<host>
+  <status state="up"/>
+  <address addr="10.0.0.5" addrtype="ipv4"/>
+  <hostnames><hostname name="app01.corp" type="PTR"/></hostnames>
+  <ports>
+    <port protocol="tcp" portid="22"><state state="open"/><service name="ssh" product="OpenSSH" version="8.2p1"/></port>
+    <port protocol="tcp" portid="80"><state state="open"/><service name="http" product="nginx" version="1.18.0"/></port>
+    <port protocol="tcp" portid="3306"><state state="open"/><service name="mysql" product="MySQL" version="8.0.32"/></port>
+    <port protocol="tcp" portid="3389"><state state="open"/><service name="ms-wbt-server" product="Microsoft Terminal Services"/></port>
+  </ports>
+</host>
+<host>
+  <status state="up"/>
+  <address addr="10.0.0.8" addrtype="ipv4"/>
+  <ports>
+    <port protocol="tcp" portid="22"><state state="open"/><service name="ssh" product="OpenSSH" version="8.2p1"/></port>
+    <port protocol="tcp" portid="23"><state state="open"/><service name="telnet"/></port>
+    <port protocol="tcp" portid="445"><state state="open"/><service name="microsoft-ds"/></port>
+  </ports>
+</host>
+</nmaprun>

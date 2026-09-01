@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nmaprun>
+<nmaprun scanner="nmap" start="1703980800" version="7.94">
+<host>
+  <status state="up"/>
+  <address addr="10.0.0.5" addrtype="ipv4"/>
+  <ports>
+    <port protocol="tcp" portid="22"><state state="open"/><service name="ssh"/></port>
+    <port protocol="tcp" portid="80"><state state="open"/><service name="http"/></port>
+  </ports>
+</host>
+</nmaprun>
